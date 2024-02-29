@@ -1,0 +1,18 @@
+services:
+  graphql_api:
+    container_name: graphql_api
+    build: .
+    command: bash -c "rm -f graphql_api/tmp/pids/server.pid && bundle exec rails s -p 3001 -b '0.0.0.0'"
+    volumes:
+      - .:/graphql_api
+    ports:
+      - "3001:3001"
+    depends_on:
+      - db
+  db:
+    container_name: graphql_api_db
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password

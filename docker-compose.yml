@@ -8,11 +8,25 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - db
-  db:
-    container_name: graphql_api_db
-    image: postgres
+      rabbitmq:
+        condition: service_healthy
+    networks:
+      - policy-network
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+    - "5672:5672"
+    - "15672:15672"
     volumes:
-      - ./tmp/db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_PASSWORD: password
+    - /var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmqctl","await_startup"]
+      interval: 5s
+    networks:
+      - policy-network
+
+networks:
+  policy-network:
+    name: policy_network
+    external: true
+

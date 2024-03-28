@@ -72,5 +72,4 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
-
-gem "rails-graphql", "~> 1.0"
+gem "graphiql-rails", group: :development

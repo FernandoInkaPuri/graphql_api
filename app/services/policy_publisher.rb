@@ -1,14 +1,14 @@
 require 'bunny'
 
 class PolicyPublisher
-  def self.publish(msg)
+  def self.publish(msg, queue)
     connection = Bunny.new(host:  'rabbitmq')
     connection.start
     channel = connection.create_channel
 
-    queue = channel.queue('hello', durable: true)
+    q = channel.queue(queue, durable: true)
 
-    channel.default_exchange.publish(msg, routing_key: queue.name)
+    channel.default_exchange.publish(msg, routing_key: q.name)
     puts " [x] Sent 'Hello World!'"
     connection.close
   end

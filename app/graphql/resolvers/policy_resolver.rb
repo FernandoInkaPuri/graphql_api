@@ -6,7 +6,7 @@ module Resolvers
     argument :policy_id, ID, required: true
 
     def resolve(policy_id:)
-      response = Net::HTTP.get(URI("http://rest_api:3000/policies/#{policy_id}"))
+      response = Net::HTTP.get(URI("http://rest_api:3005/policies/#{policy_id}"))
 
       Rails.logger.info(response)
       JSON.parse(response)

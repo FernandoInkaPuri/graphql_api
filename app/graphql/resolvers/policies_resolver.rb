@@ -6,7 +6,7 @@ module Resolvers
     # argument tem??
 
     def resolve
-      response = Net::HTTP.get(URI("http://rest_api:3000/policies"))
+      response = Net::HTTP.get(URI("http://rest_api:3005/policies"))
 
       Rails.logger.info(response)
       JSON.parse(response)
